@@ -38,7 +38,7 @@ while handler.still_running:
     recent = handler.get_latest_bars("AAPL", 3)   # the last 3 revealed days
 
     print(handler.counter, bar["AAPL"]["Close"], len(recent))
-    print(recent)
+    
     if handler.counter == 5:         # stop early so you don't print thousands of lines
         break
 

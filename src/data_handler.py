@@ -27,20 +27,6 @@ class DataHandler:
     start = max(0, self.counter - n)
     return self.data[ticker].iloc[start:self.counter]
 
-handler = DataHandler(["AAPL"], "/Users/dakshaswam/backtesting engine/Event-driven-backtesting-engine-/data")
-
-while handler.still_running:
-   
-    bar = handler.advance()          # reveal the next day
-    if bar is None:                  # no data left
-        break
-
-    recent = handler.get_latest_bars("AAPL", 3)   # the last 3 revealed days
-
-    print(handler.counter, bar["AAPL"]["Close"], len(recent))
-    
-    if handler.counter == 5:         # stop early so you don't print thousands of lines
-        break
 
 
 

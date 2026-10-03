@@ -34,8 +34,9 @@ class MovingAverageCrossStrategy(Strategy):
             elif yesterday_short >= yesterday_long and today_short < today_long:
                 direction = "SELL"
 
-            signal_event = SignalEvent(ticker, bars.index[-1],direction)
-            self.queue.append(signal_event)
+            if direction is not None:
+                signal_event = SignalEvent(ticker, bars.index[-1], direction)
+                self.queue.append(signal_event)
                 
 
 

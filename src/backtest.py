@@ -1,8 +1,8 @@
 from collections import deque
 from data_handler import DataHandler
 from events import *
-from stretegy import MovingAverageCrossStrategy   # change to "strategy" if you renamed the file
-
+from stretegy import MovingAverageCrossStrategy
+from portfolio import *
 
 class Backtest:
     def __init__(self, handler: DataHandler, short_window=20, long_window=50):
@@ -10,8 +10,7 @@ class Backtest:
         self.queue = deque()
         self.counter = 0
         self.signals = []
-
-        # Created once, sharing this backtest's handler and queue
+        self.portfolio = Portfolio(self.handler, self.queue)
         self.strategy = MovingAverageCrossStrategy(
             self.handler, self.queue, short_window, long_window
         )
@@ -30,12 +29,12 @@ class Backtest:
                     self.strategy.calculate_signals(event)
 
                 elif isinstance(event, SignalEvent):
-                    # No portfolio yet, so just record and show the signal
+                    self.portfolio.signal(event)
                     self.signals.append(event)
                     print(vars(event))
 
                 elif isinstance(event, OrderEvent):
-                    pass
+                    print(vars(event))
 
                 elif isinstance(event, FillEvent):
                     pass

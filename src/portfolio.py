@@ -7,6 +7,7 @@ class Portfolio:
         self.shared_queue = shared_queue
         self.handler = handler 
         self.quantity = 100
+        self.equitycurve = []
 
     def buy_shares(self, ticker, price):
         self.cash = self.cash - (price * self.quantity)
@@ -33,9 +34,24 @@ class Portfolio:
             event = OrderEvent(ticker,timestampa ,direction, self.quantity)
         elif direction == "SELL" and shares > 0:
             event = OrderEvent(ticker,timestampa ,direction, shares)    
+
         else:
             return 
 
         self.shared_queue.append(event)
+
+    def recordvalue(self):
+        total = self.cash
+        date = None
+
+        for tickers in self.handler.tickers:
+            latest = self.handler.get_latest_bars(tickers,1)
+            price = latest['Close'].iloc[-1]
+            date = latest.index[-1]
+
+            shares_held = self.shares.get(tickers, 0)
+            total += shares_held * price
+
+        self.equitycurve.append((date, total))
 
 

@@ -32,8 +32,9 @@ class Backtest:
 
                 if isinstance(event, MarketEvent):
                     self.counter += 1
+                    self.execution.fillpendingorder()
                     self.strategy.calculate_signals(event)
-                    self.portfolio.recordvalue()
+                    self.portfolio.record_value()
 
                 elif isinstance(event, SignalEvent):
                     self.signals.append(event)
@@ -45,6 +46,6 @@ class Backtest:
                 elif isinstance(event, FillEvent):
                     self.fills.append(event)
                     if event.direction == "BUY":
-                        self.portfolio.buy_shares(event.ticker, event.fill_price)
+                        self.portfolio.buy_shares(event.ticker, event.fill_price, event.quantity, event.commission)
                     elif event.direction == "SELL":
-                        self.portfolio.sell_shares(event.ticker, event.fill_price)
+                        self.portfolio.sell_shares(event.ticker, event.fill_price, event.quantity, event.commission)

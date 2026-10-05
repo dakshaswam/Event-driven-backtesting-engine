@@ -1,5 +1,5 @@
 Event-Driven Backtesting Engine
-An event-driven backtester written in Python that replays historical price data one bar at a time and passes events through a shared queue: market data triggers the strategy, signals become orders in the portfolio, and orders are filled by a simulated execution handler at the next bar's open with slippage and commission. It currently includes a moving average crossover strategy, all-in position sizing, an equity curve with return and drawdown metrics, and a Streamlit dashboard comparing the strategy to buy-and-hold. On AAPL from 2005 to 2026, the 20/50 crossover returned about 18% a year against roughly 31% for buy-and-hold.
+An event-driven backtester written in Python that replays historical price data one bar at a time and passes events through a shared queue: market data triggers the strategy, signals become orders in the portfolio, and orders are filled by a simulated execution handler at the next bar's open with slippage and commission. It currently includes a moving average crossover strategy, all-in position sizing, an equity curve with return and drawdown metrics, and a Streamlit dashboard comparing the strategy to buy-and-hold.
 pip install -r requirements.txt
 streamlit run app.py
 Place daily price CSVs (e.g. AAPL.csv) in a data/ folder before running.
